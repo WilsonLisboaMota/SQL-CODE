@@ -18,7 +18,7 @@ group by location
 order by 2 asc
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Total Cases vs Total Deaths
 -- This results shows the likelihood of dying if you contract covid in Switzerland
 Select	location,
@@ -32,7 +32,8 @@ and	location = 'Switzerland'
 order by 1,2
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Total Cases vs Total Population
 -- This results shows what percentage of population contracted covid in Switzerland
 Select	location,
@@ -46,7 +47,8 @@ and	continent is not null
 order by 2,Infection_Rate asc
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Looking at Countries with Highest Infection Rate Compared to Population
 -- At the moment, Switzerland has an infection rate of 9.44% and is ranked 32nd on the list.
 Select	 location,
@@ -59,7 +61,7 @@ Group by location, population
 order by Infection_Rate desc
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Looking at Countries with Highest Death Count per Population
 -- At the moment, Switzerland has an infection rate of 9.44% and is ranked 32nd on the list.
 Select	 location,
@@ -70,7 +72,7 @@ group by location
 order by HighestDeathCount desc
  
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Looking at the final result of total cases, total deaths and the death rate around the world
 -- As for now, there are 228063616 cases, 4683020 deaths and a death rate slightly above 2%
 Select	sum(new_cases) as Total_Cases,
@@ -81,7 +83,7 @@ where	continent is not null
 order by 1,2
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Use of CTE
 -- 9.4% of the Swiss population got infected, 12.8% of the Swiss population died by Covid and 52% of the Swiss population is fully vaccinated
 With PopInfecvsVac (Location,
@@ -125,7 +127,7 @@ from	PopInfecvsVac
 order by 1,2
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Temp table (same table as CTE above, but in a different way)
 Drop table if exists #PercentPopulationVaccinated
 GO
@@ -170,7 +172,7 @@ from	#PercentPopulationVaccinated
 order by 1,2
 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Creating View with data cleansing to store data for later visualizations
 Drop View if exists view_PercentPopulationVaccinated
 GO
@@ -228,3 +230,4 @@ Select	ltrim(rtrim(Continent)) as Continent,
 	People_Vaccinated,
 	cast(People_Vaccinated/(cast(population as decimal(20,0)))*100 as decimal(10,2)) as Vaccination_Rate
 from	PopInfecvsVac
+
