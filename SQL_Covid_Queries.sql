@@ -208,7 +208,7 @@ Select  CD.continent,
 	 	     order by	  CD.location, CD.date), 0), --Total Deaths ref
 	cast(isnull(CD.total_cases/CD.population*100, 0) as decimal(10,2)), --Infection Rate ref
 	isnull(cast(cast(CD.total_deaths as decimal(20,0))/cast(total_cases as int)*100 as decimal(10,2)), 0), --Death Rate ref
-	case when cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(10,2)) IS null then 0
+	case when cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(10,2)) is null then 0
 	     else cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(10,2)) end, --% Population Death ref
 	isnull(CV.people_fully_vaccinated, 0) --Vaccination Rate ref
 From	CovidPortfolioProject..CovidDeaths as CD
