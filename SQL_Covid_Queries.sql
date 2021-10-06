@@ -175,9 +175,6 @@ order by 1,2
 Drop View if exists view_PercentPopulationVaccinated
 GO
 
-Use CovidPortfolioProject
-GO
-
 Create View view_PercentPopulationVaccinated as
 
 With PopInfecvsVac (Continent,
