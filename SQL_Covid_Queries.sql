@@ -173,7 +173,7 @@ order by 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Creating View with data cleansing to store data for later visualizations
+-- Creating View with data cleaning to store data for later visualizations
 Drop View if exists view_PercentPopulationVaccinated
 GO
 
