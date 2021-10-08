@@ -6,7 +6,7 @@ List of Skills: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Function
 */
 
 
--- Understand where the virus first appeared in the logs
+-- Understand when and where the virus first appeared in the logs
 -- On January 22, 2020, the countries that were spreading the virus were South Korea, the United States, China, Thailand, Japan and Taiwan.
 Select	 location,
 	 min(date) as FirstCaseDetected
