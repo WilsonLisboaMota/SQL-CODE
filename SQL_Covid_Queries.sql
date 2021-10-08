@@ -96,11 +96,10 @@ With PopInfecvsVac (Location,
 		    date,
 		    population,
 		    Total_Cases,
-		    Infected_Population_Rate,
 		    Death_Rate,
 		    Percnt_of_Pop_Death,
 		    Total_Vac
-		   )
+		    )
 as
 (
 Select  CD.location,
@@ -108,11 +107,10 @@ Select  CD.location,
 	CD.population,
 	sum(CD.new_cases) 
 		over (
-			partition by 	CD.location 
-			order by	CD.location, CD.date) as Total_Cases,
-	cast(CD.total_cases/CD.population*100 as decimal(3,1)) as Infected_Population_Rate,
-	cast(cast(CD.total_deaths as decimal(20,0))/cast(total_cases as int)*100 as decimal(3,2)) as Prob_of_Death_by_Covid,
-	cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(3,2)) as Percnt_of_Pop_Death,
+			partition by CD.location 
+			order by     CD.location, CD.date) as Total_Cases,
+	cast(cast(CD.total_deaths as decimal(20,0))/cast(total_cases as int)*100 as decimal(10,2)) as Prob_of_Death_by_Covid,
+	cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(10,2)) as Percnt_of_Pop_Death,
 	CV.people_fully_vaccinated as Total_Vac
 From	CovidPortfolioProject..CovidDeaths as CD
 join	CovidPortfolioProject..CovidVaccination as CV
@@ -124,11 +122,11 @@ Where	CD.location = 'Switzerland'
 Select	Location,
 	date,
 	Total_Cases,
-	Infected_Population_Rate,
+	cast(Total_Cases/population*100 as decimal(10,1)) as Infected_Population_Rate,
 	Death_Rate,
 	Percnt_of_Pop_Death,
 	Total_Vac,
-	Total_Vac/(cast(population as decimal(20,0)))*100 as Vac_Rate
+	Total_Vac/(cast(population as decimal(30,0)))*100 as Vac_Rate
 from	PopInfecvsVac
 order by 1,2
 
@@ -142,35 +140,34 @@ GO
 Create Table #PercentPopulationVaccinated (
 	Location nvarchar(255),
 	date datetime,
-	population decimal (20,0),
+	population decimal(20,0),
 	Total_Cases int,
-	Infected_Population_Rate decimal(3,2),
-	Prob_of_Death_by_Covid decimal(3,2),
-	Percnt_of_Pop_Death decimal(3,2),
+	Prob_of_Death_by_Covid decimal(20,2),
+	Percnt_of_Pop_Death decimal(20,2),
 	Total_Vac int
 	)
+
 Insert into #PercentPopulationVaccinated 
 Select  CD.location,
 	CD.date,
 	CD.population,
 	sum(CD.new_cases) 
 		over (
-			partition by 	CD.location 
-			order by	CD.location, CD.date) as Total_Cases,
-	cast(CD.total_cases/CD.population*100 as decimal(3,1)) as Infected_Population_Rate,
-	cast(cast(CD.total_deaths as decimal(20,0))/cast(total_cases as int)*100 as decimal(3,2)) as Prob_of_Death_by_Covid,
-	cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(3,2)) as Percnt_of_Pop_Death,
+			partition by CD.location 
+			order by     CD.location, CD.date) as Total_Cases,
+	cast(cast(CD.total_deaths as decimal(20,0))/cast(total_cases as int)*100 as decimal(20,2)) as Prob_of_Death_by_Covid,
+	cast(cast(CD.total_deaths as decimal(20,0))/CD.population*100 as decimal(20,2)) as Percnt_of_Pop_Death,
 	CV.people_fully_vaccinated as Total_Vac
 From	CovidPortfolioProject..CovidDeaths as CD
 join	CovidPortfolioProject..CovidVaccination as CV
   on	CD.date = CV.date
   and	CD.location = CV.location
-Where	CD.location = 'Switzerland'
+where	CD.continent is not null
 
 Select	Location,
 	date,
 	Total_Cases,
-	Infected_Population_Rate,
+	cast(Total_Cases/population*100 as decimal(20,1)) as Infected_Population_Rate,
 	Prob_of_Death_by_Covid,
 	Percnt_of_Pop_Death,
 	Total_Vac,
