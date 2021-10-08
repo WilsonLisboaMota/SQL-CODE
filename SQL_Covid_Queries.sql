@@ -36,7 +36,7 @@ order by 1,2
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --3
 -- Total Cases vs Total Population
--- This querie shows that 9,4% of the Swiss population already contracted the covid virus
+-- This query shows that 9,4% of the Swiss population already contracted the covid virus
 Select	location,
 	date,
 	total_cases,
@@ -52,7 +52,7 @@ order by 2,Infection_Rate asc
 --4
 -- Looking at Countries with Highest Infection Rate Compared to Population
 -- Seychelles is at the forefront showing that 21% of the population has already contracted the virus
--- With 9.4% of Swiss already infected, Switzerland ranks 32nd
+-- and, as we found out earlier, with 9.4% of Swiss already infected, we can see that Switzerland ranks 32nd
 Select	 location,
 	 MAX(total_cases) as HighestInfectionCount,
 	 population,
