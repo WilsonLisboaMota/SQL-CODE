@@ -5,7 +5,7 @@ List of Skills: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Function
 
 */
 
-
+--1
 -- Understand when and where the virus first appeared in the logs
 -- On January 22, 2020, the countries that were spreading the virus were South Korea, the United States, China, Thailand, Japan and Taiwan.
 Select	 location,
@@ -19,6 +19,7 @@ order by 2 asc
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--2
 -- Total Cases vs Total Deaths
 -- This results shows the likelihood of dying if you contract covid in Switzerland
 Select	location,
@@ -34,6 +35,7 @@ order by 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--3
 -- Total Cases vs Total Population
 -- This querie shows that 9,4% of the Swiss population already contracted the covid virus
 Select	location,
@@ -49,6 +51,7 @@ order by 2,Infection_Rate asc
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--4
 -- Looking at Countries with Highest Infection Rate Compared to Population
 -- Seychelles is at the forefront showing that 21% of the population has already contracted the virus
 -- With 9.4% of Swiss already infected, Switzerland ranks 32nd
@@ -63,17 +66,20 @@ order by Infection_Rate desc
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Looking at Countries with Highest Death Count per Population
--- At the moment, Switzerland has an infection rate of 9.44% and is ranked 32nd on the list.
-Select	 location,
-	 MAX(CAST(total_deaths as int)) as HighestDeathCount
-from	 CovidPortfolioProject..CovidDeaths
-where	 continent is not null
+--5
+-- Looking at which continent has the highest Death Count per Population
+-- At the moment, Europe leads with more than 1 million people already infected by the virus.
+Select	location,
+	SUM(CAST(new_deaths as int)) as TotalDeathCount
+from	CovidPortfolioProject..CovidDeaths
+where	continent is null
+and	location not in ('World', 'European Union', 'International')
 group by location
-order by HighestDeathCount desc
+order by TotalDeathCount desc
  
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--6
 -- Looking at the final result of total cases, total deaths and the death rate around the world
 -- As for now, there are 228063616 cases, 4683020 deaths and a death rate slightly above 2%
 Select	sum(new_cases) as Total_Cases,
@@ -85,6 +91,7 @@ order by 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--7
 -- Use of CTE
 -- 9.4% of the Swiss population got infected, 12.8% of the Swiss population died by Covid and 52% of the Swiss population is fully vaccinated
 With PopInfecvsVac (Location,
@@ -129,6 +136,7 @@ order by 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--8
 -- Temp table (same table as CTE above, but in a different way)
 Drop table if exists #PercentPopulationVaccinated
 GO
@@ -174,6 +182,7 @@ order by 1,2
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--9
 -- Creating View with data cleaning to store data for later visualizations
 Drop View if exists view_PercentPopulationVaccinated
 GO
