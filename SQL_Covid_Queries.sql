@@ -13,7 +13,7 @@ Select	 location,
 from	 CovidPortfolioProject..CovidDeaths
 where	 total_cases is not null
 and	 continent is not null
--- The reason I added the Continent filter is because of the data structure and I will add it here to most queries
+-- The reason I added the Continent filter is because the way the data is structured
 group by location
 order by 2 asc
 
