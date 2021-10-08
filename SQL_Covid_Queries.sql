@@ -49,7 +49,7 @@ order by 2,Infection_Rate asc
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- When looking at Countries with Highest Infection Rate Compared to Population.
+-- Looking at Countries with Highest Infection Rate Compared to Population.
 -- Seychelles is at the forefront, showing that 21% of the population has already contracted the virus.
 Select	 location,
 	 MAX(total_cases) as HighestInfectionCount,
